@@ -1,6 +1,7 @@
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { login } from "../store/auth/slice";
+import { selectLoginError } from "../store/auth/selectors";
 
 export default function Login() {
   const dispatch = useDispatch();
@@ -8,6 +9,8 @@ export default function Login() {
     email: "",
     password: "",
   });
+
+  const loginError = useSelector(selectLoginError);
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -50,7 +53,10 @@ export default function Login() {
             }
           />
         </div>
-        <br />
+
+        {loginError && (
+          <span style={{ color: "red" }}>Invalid credentials</span>
+        )}
 
         <button class="btn btn-primary">Login</button>
       </form>

@@ -16,12 +16,12 @@ const galleriesSlice = createSlice({
     gallery: null,
     term: null,
     userId: null,
+    createErrors: null,
     page: {
       data: [],
       current_page: 0,
       last_page: 0,
     },
-    errors: null,
   },
   reducers: {
     setGalleries: (state, action) => {
@@ -49,9 +49,8 @@ const galleriesSlice = createSlice({
     setGalleryWithoutComment(state, action) {
       state.gallery = action.gallery;
     },
-
-    setErrors(state, action) {
-      state.errors = action.payload;
+    setCreateErrors(state, action) {
+      state.createErrors = action.payload;
     },
 
     ...middlewareActions,
@@ -73,6 +72,6 @@ export const {
   deleteComment,
   setGalleryWithNewComment,
   setGalleryWithoutComment,
-  setErrors,
+  setCreateErrors,
 } = galleriesSlice.actions;
 export default galleriesSlice.reducer;

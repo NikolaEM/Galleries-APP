@@ -12,7 +12,7 @@ import {
   deleteComment,
   setGalleryWithNewComment,
   setGalleryWithoutComment,
-  setErrors,
+  setCreateErrors,
 } from "./slice";
 import galleryService from "../../services/GalleryService";
 
@@ -51,7 +51,7 @@ function* handleCreateGallery({ payload }) {
     }
   } catch (error) {
     if (error.response.status === 422) {
-      alert(yield put(setErrors(error.response.data.errors)));
+      yield put(setCreateErrors(error.response.data.errors));
     }
   }
 }
@@ -64,7 +64,7 @@ function* handleEditGallery({ payload }) {
     }
   } catch (error) {
     if (error.response.status === 422) {
-      alert(yield put(setErrors(error.response.data.errors)));
+      yield put(setCreateErrors(error.response.data.errors));
     }
   }
 }

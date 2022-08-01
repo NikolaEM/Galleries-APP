@@ -6,6 +6,8 @@ import {
   getActiveUser,
   setActiveUser,
   setToken,
+  setRegistrationErrors,
+  setLoginError,
 } from "./slice";
 import authService from "../../services/AuthService";
 
@@ -14,8 +16,10 @@ function* handleRegister(action) {
     const { user, token } = yield call(authService.register, action.payload);
     yield put(setToken(token));
     yield put(setActiveUser(user));
-  } catch (error) {
-    alert("Invalid input data");
+  } catch (e) {
+    if (e.response.status == 422) {
+      yield put(setRegistrationErrors(e.response.data.errors));
+    }
   }
 }
 
@@ -24,10 +28,10 @@ function* handleLogin(action) {
     const { user, token } = yield call(authService.login, action.payload);
     yield put(setToken(token));
     yield put(setActiveUser(user));
-  } catch (error) {
-    alert(
-      "Password must contain at least one number and at least 8 or more characters!"
-    );
+  } catch (e) {
+    if (e.response.status == 401) {
+      yield put(setLoginError(true));
+    }
   }
 }
 

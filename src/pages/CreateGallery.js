@@ -1,7 +1,10 @@
 import { useState, useEffect } from "react";
 import { useParams, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { selectGallery } from "../store/galleries/selectors";
+import {
+  selectGallery,
+  selectCreateErrors,
+} from "../store/galleries/selectors";
 import { createGallery, editGallery } from "../store/galleries/slice";
 
 export default function CreateGallery() {
@@ -10,6 +13,7 @@ export default function CreateGallery() {
   const dispatch = useDispatch();
 
   const retrievedGallery = useSelector(selectGallery);
+  const errors = useSelector(selectCreateErrors);
 
   const [newGallery, setNewGallery] = useState({
     title: "",
@@ -154,6 +158,9 @@ export default function CreateGallery() {
               setNewGallery({ ...newGallery, title: target.value })
             }
           />
+          {errors?.title?.length && (
+            <span style={{ color: "red" }}>{errors.title[0]}</span>
+          )}
 
           <textarea
             class="form-control"
@@ -167,6 +174,9 @@ export default function CreateGallery() {
               setNewGallery({ ...newGallery, description: target.value })
             }
           />
+          {errors?.description?.length && (
+            <span style={{ color: "red" }}>{errors.description[0]}</span>
+          )}
 
           {newGallery.images &&
             newGallery.images.map((x, i) => {
@@ -180,6 +190,9 @@ export default function CreateGallery() {
                     placeholder="Image url"
                     onChange={(e) => handleInputChange(e, i)}
                   />
+                  {errors?.url?.length && (
+                    <span style={{ color: "red" }}>{errors.url[0]}</span>
+                  )}
                   <span>
                     {newGallery.images.length > 1 && (
                       <button onClick={() => handleRemoveClick(i)}>

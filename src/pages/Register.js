@@ -1,6 +1,7 @@
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
 import { register } from "../store/auth/slice";
+import { selectRegistrationErrors } from "../store/auth/selectors";
 
 export default function Register() {
   const dispatch = useDispatch();
@@ -12,6 +13,8 @@ export default function Register() {
     password_confirmation: "",
     terms: false,
   });
+
+  const errors = useSelector(selectRegistrationErrors);
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -47,6 +50,9 @@ export default function Register() {
               setUserData({ ...userData, first_name: target.value })
             }
           />
+          {errors?.first_name?.length && (
+            <span style={{ color: "red" }}>{errors.first_name[0]}</span>
+          )}
 
           <input
             class="form-control"
@@ -57,6 +63,9 @@ export default function Register() {
               setUserData({ ...userData, last_name: target.value })
             }
           />
+          {errors?.last_name?.length && (
+            <span style={{ color: "red" }}>{errors.last_name[0]}</span>
+          )}
 
           <input
             class="form-control"
@@ -68,6 +77,9 @@ export default function Register() {
               setUserData({ ...userData, email: target.value })
             }
           />
+          {errors?.email?.length && (
+            <span style={{ color: "red" }}>{errors.email[0]}</span>
+          )}
 
           <input
             class="form-control"
@@ -79,6 +91,9 @@ export default function Register() {
               setUserData({ ...userData, password: target.value })
             }
           />
+          {errors?.password?.length && (
+            <span style={{ color: "red" }}>{errors.password[0]}</span>
+          )}
 
           <input
             class="form-control"
@@ -90,6 +105,11 @@ export default function Register() {
               setUserData({ ...userData, password_confirmation: target.value })
             }
           />
+          {errors?.password_confirmation?.length && (
+            <span style={{ color: "red" }}>
+              {errors.password_confirmation[0]}
+            </span>
+          )}
 
           <label>
             Please read and accept Terms and Conditions before registering!

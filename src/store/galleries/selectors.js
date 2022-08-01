@@ -13,3 +13,7 @@ export function selectSearchTerm(state) {
 export function selectSearchUserId(state) {
   return state.galleries.userId;
 }
+
+export function selectCreateErrors(state) {
+  return state.galleries.createErrors;
+}
